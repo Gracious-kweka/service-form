@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPKTechLab - Service Registration</title>
+    <style>
+        /* CSS - Brand Colors */
+        :root {
+            --gold: #FFC107;
+            --dark-blue: #1A365D;
+            --light-blue: #2B6CB0;
+            --bg-gradient: linear-gradient(135deg, #1a2a44 0%, #3a4a63 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-gradient);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-image: url(7.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .form-container {
+            background: black;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 500px;
+            border-top: 8px solid var(--gold);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: var(--dark-blue);
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .header p {
+            color: #d3bbbb;
+            font-style: italic;
+        }
+
+        .header img {
+            padding-top: 1px ;
+            padding-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: 2px solid var(--gold);
+            border-color: transparent;
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--dark-blue);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: var(--light-blue);
+        }
+
+        #status-message {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <div class="header">
+        <img src="picha.png" alt="">
+        <h1><strong style="color: #FFC107;">GPK</strong><em style="color: #5d8fc4;">TechLab</em></h1>
+        <p>We build what tomorrow needs</p>
+    </div>
+
+    <form id="registration-form">
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" name="name" placeholder=" Griffin" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="griffin@example.com" required>
+        </div>
+
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="+255..." required>
+        </div>
+
+        <div class="form-group">
+            <label>Required Service</label>
+            <select name="service" required>
+                <option value="">-- Select a Service --</option>
+                <option value="Website Development">Website Development</option>
+                <option value="Website Designing">Website Designing</option>
+                <option value="Graphics Designing">Graphics Designing</option>
+                <option value="System Analysis">System Analysis</option>
+                <option value="Programming">Programming</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Project Details</label>
+            <textarea name="details" rows="4" placeholder="Briefly describe your needs..."></textarea>
+        </div>
+
+        <button type="submit" id="submit-btn">Submit Request</button>
+        <div id="status-message"></div>
+    </form>
+</div>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwlJnevqVrLb_4et6lFRwoI_sGeJ0JuJCG5a0q2V804z3wqqMMCDAszTAdFgXWCWorf/exec' // Replace this after Step 2
+    const form = document.getElementById('registration-form')
+    const msg = document.getElementById('status-message')
+    const btn = document.getElementById('submit-btn')
+
+    form.addEventListener('submit', e => {
+        e.preventDefault()
+        btn.disabled = true
+        msg.innerHTML = "Sending... Please wait."
+        msg.style.color = "blue"
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                msg.innerHTML = "Success! We will contact you soon."
+                msg.style.color = "green"
+                btn.disabled = false
+                form.reset()
+            })
+            .catch(error => {
+                msg.innerHTML = "Error! Please try again."
+                msg.style.color = "red"
+                btn.disabled = false
+                console.error('Error!', error.message)
+            })
+    })
+</script>
+
+</body>
+</html>
